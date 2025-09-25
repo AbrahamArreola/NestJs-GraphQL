@@ -1,0 +1,14 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  """Returns a hello world message"""
+  hello: String!
+
+  """Returns a random number between 0 and 100"""
+  randomNumber: Float!
+
+  """Returns a random number between 0 and the given number (default is 6)"""
+  randomFromZeroTo(toNumber: Int): Int!
+}
