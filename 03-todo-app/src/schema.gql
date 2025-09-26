@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Todo {
+  id: Int!
+  description: String!
+  done: Boolean!
+}
+
+type Query {
+  """Returns a hello world message"""
+  hello: String!
+
+  """Returns a random number between 0 and 100"""
+  randomNumber: Float!
+
+  """Returns a random number between 0 and the given number (default is 6)"""
+  randomFromZeroTo(toNumber: Int): Int!
+  todos: [Todo!]!
+  todo(id: Int!): Todo!
+}
+
+type Mutation {
+  create(createTodoInput: CreateTodoInput!): Todo!
+  update(updateTodoInput: UpdateTodoInput!): Todo!
+}
+
+input CreateTodoInput {
+  """The description of the task"""
+  description: String!
+}
+
+input UpdateTodoInput {
+  """The id of the task"""
+  id: Int!
+
+  """The description of the task"""
+  description: String
+
+  """The status of the task"""
+  done: Boolean
+}
