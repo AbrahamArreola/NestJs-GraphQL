@@ -1,15 +1,35 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Todo } from './entities/todo.entity';
-import { CreateTodoInput, UpdateTodoInput } from './dtos/inputs';
+import { GetTodosArgs, CreateTodoInput, UpdateTodoInput } from './dtos';
 
 @Injectable()
 export class TodoService {
   private todos: Todo[] = [
     { id: 1, description: 'Learn NestJS', done: false },
-    { id: 2, description: 'Build a GraphQL API', done: false },
+    { id: 2, description: 'Build a GraphQL API', done: true },
+    { id: 3, description: 'Learn Golang', done: false },
+    { id: 4, description: 'Dockerize API application', done: false },
   ];
 
-  findAll(): Todo[] {
+  public get totalTodos(): number {
+    return this.todos.length;
+  }
+
+  public get completedTodos(): number {
+    return this.todos.filter((todo) => todo.done).length;
+  }
+
+  public get pendingTodos(): number {
+    return this.todos.filter((todo) => !todo.done).length;
+  }
+
+  findAll(getTodosArgs: GetTodosArgs): Todo[] {
+    const { status } = getTodosArgs;
+
+    if (status !== undefined) {
+      return this.todos.filter((todo) => todo.done === status);
+    }
+
     return this.todos;
   }
 
@@ -42,5 +62,13 @@ export class TodoService {
     if (done !== undefined) todo.done = done;
 
     return todo;
+  }
+
+  remove(id: number): boolean {
+    this.findOne(id);
+
+    this.todos = this.todos.filter((todo) => todo.id !== id);
+
+    return true;
   }
 }
